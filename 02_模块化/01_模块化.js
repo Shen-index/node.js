@@ -12,6 +12,8 @@
 
                 在node中默认支持模块化规范叫CommonJS
                     在CommonJS中,一个js文件就是一个模块
+                    导出变量
+                    exports
 
                 CommonJS规范（有两种）
                     - 引入模块
