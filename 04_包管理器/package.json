@@ -1,0 +1,11 @@
+{
+  "name": "space",
+  "version": "1.0.0",
+  "description": "",
+  "main": "01_npm.js",
+  "scripts": {
+    "foo": "dir"
+  },
+  "author": "",
+  "license": "ISC"
+}

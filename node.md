@@ -219,18 +219,21 @@ js和node.js的区别
                   const promise = new Promise((resolve, reject) => {
                      // resolve 和 reject是两个函数，通过这两个函数可以向promise中存储数据
                       
+                 ```
+         
          //resolve在执行正常时存储数据
                   	//reject在执行错误时存储数据                 
                      //resolve("第一");
                      reject("第二");
                   })
                   
+         
                   console.log(promise);
       ```
-                  
+            
           
       -   通过函数来向promise中添加数据，可以用来添加异步调用的数据
-
+      
       -   ```js
           const promise = new Promise((resolve, reject) => {
              setTimeout(() => {
@@ -245,18 +248,18 @@ js和node.js的区别
           setTImeout(() => {
               console.log(promise)
           },4000)
+    
           
-          
-          ```
-
-      -   问题一：我们该如何从promise中读取数据呢
-
-      -   解决：通过promise实例方法then来读取promise中存储的数据
-
-          -   then需要两个回调函数作为参数，回调函数用来获取promise中的数据
-
+```
+      
+-   问题一：我们该如何从promise中读取数据呢
+      
+-   解决：通过promise实例方法then来读取promise中存储的数据
+      
+    -   then需要两个回调函数作为参数，回调函数用来获取promise中的数据
+      
           -   第一个then的回调函数
-
+      
           -   ```js
               //第一个读取到promise中的数据
               const promise = new Promise((resolve, reject) => {
@@ -275,12 +278,12 @@ js和node.js的区别
                   console.log("promise中的数据"+ result)
               },(resultEl) => {
                   console.log("第二个参数",+resultEl)
-              })
+        })
               
-              ```
-
+        ```
+      
           -   第二个then的回调函数
-
+      
               ```js
               //第二个读取到promise中的数据
               const promise = new Promise((resolve, reject) => {
@@ -297,11 +300,80 @@ js和node.js的区别
                   console.log("1"+ result)
               },(resultEl) => {
                   console.log("2",+resultEl)
-              })
+        })
               
               ```
-
+      
               
 
 
+
+### 2.3.Promise中的静态方法
+
+- Promise.resolve()
+
+  - ```js
+    创建一个立即完成的Promise
+    等同于
+    new Promise((resolve,reject) => {
+      resolve("内容")  
+    })
+    ```
+
+- Promise.reject()
+
+  - ```js
+    创建一个立即拒绝的Promise
+    等同于
+    new Promise((resolve,reject) => {
+        reject("拒绝")
+    })
+    ```
+
+    
+
+- Promise.all([])
+
+  - 添加一个数组
+
+  - 放回的是一个数组，放回多个Promise的执行结果
+
+  - 有一个错误，就会返回错误
+
+    
+
+- Promise.allSettled([])
+
+  - 同时返回多个Promise对象
+  - 返回的是对象数组，错误的数据也会返回
+  - 相当有then中的第二个执行结果reason
+
+- 
+
+- 
+
   
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+​	
