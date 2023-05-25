@@ -75,12 +75,29 @@
                         出错了才会有对象
                 第二个参数回调函数(buffer)
                     因为要将读取的内容放回
+            fs.mkdir()
+                - 创建目录
+            fs.rmdir()
+                - 删除目录
+            fs.rm()
+                - 删除文件
+            fs.rename()
+                - 重命名
+            fs.copyFile()
+                - 复制文件
 */ 
 
 // const fs = require("node:fs")
 // const path = require("node:path")
 // const buf = fs.readFileSync(path.resolve(__dirname, "./hello.txt"))
-
+// fs.readFile(path.resolve(__dirname, "./hello.txt"),(err,buffer) => {
+//     if(err){
+//         console.log("吃醋列")
+//     }else{
+//         console.log(buffer.toString());
+        
+//     }
+// })
 // // console.log(buf.toString());
 
 // fs.readFile(path.resolve(__dirname, "./hello.txt"),(err, buffer) => {
@@ -105,6 +122,14 @@
 // const path = require("path");
 // fs.readFile(path.resolve(__dirname, "./hello.txt"))
 // .then(buffer => {
+//     console.log(buffer.toString())
+// }).catch(e => {
+//     console.log("出错列");
+    
+// });
+
+// fs.readFile(path.resolve(__dirname, "./hello.txt"))
+// .then(buffer => {
 //     console.log(buffer.toString());
     
 // })
@@ -117,16 +142,28 @@
     async版本
 */ 
 
-const fs = require("node:fs/promises");
-const { buffer } = require("stream/consumers");
-const path = require("path");
-(async () => {
-    try {
-        const buffer = await fs.readFile(path.resolve(__dirname, "./hello.txt"));
-        console.log(buffer.toString());
+// const fs = require("node:fs/promises");
+// const { buffer } = require("stream/consumers");
+// const path = require("path");
+
+
+// (async () => {
+//     try{
+//     const buffer  = await fs.readFile(path.resolve(__dirname, "./hello.txt"))
+//     console.log(buffer.toString());
+    
+//     }catch(e){      
+//         console.log("出错 ； ");
         
-    } catch (error) {
-        console.log("出错列");
+//     }
+// })()
+// (async () => {
+//     try {
+//         const buffer = await fs.readFile(path.resolve(__dirname, "./hello.txt"));
+//         console.log(buffer.toString());
         
-    }
-})()
+//     } catch (error) {
+//         console.log("出错列");
+        
+//     }
+// })()
