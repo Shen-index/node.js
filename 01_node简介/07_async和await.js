@@ -80,12 +80,20 @@
 		当使用await调用函数后，当前函数后面的所有代码
 			会在当前函数执行完毕后，被放入到微任务队列中
 	*/ 
-    async function fn3(){
-        console.log(1)
-        await console.log(2)
-        console.log(3)
-    }
+    // async function fn3(){
+    //     console.log(1)
+    //     await console.log(2)
+    //     console.log(3)
+    // }
     
-    fn3()
+    // fn3()
     
-    console.log(4)
+    // console.log(4)
+
+	function fn(a , b) {
+		return new Promise(resolve => {
+			resolve
+		})
+	}
+	fn(1,1)
+	console.log(fn(1,1))

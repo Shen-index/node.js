@@ -250,6 +250,7 @@ js和node.js的区别
           },4000)
     
           
+      ```
 ```
       
 -   问题一：我们该如何从promise中读取数据呢
@@ -280,8 +281,8 @@ js和node.js的区别
                   console.log("第二个参数",+resultEl)
         })
               
-        ```
-      
+```
+
           -   第二个then的回调函数
       
               ```js
@@ -303,77 +304,275 @@ js和node.js的区别
         })
               
               ```
-      
-              
+
+
+​              
 
 
 
-### 2.3.Promise中的静态方法
+## 3.Promise中的静态方法
 
-- Promise.resolve()
-
-  - ```js
-    创建一个立即完成的Promise
-    等同于
-    new Promise((resolve,reject) => {
-      resolve("内容")  
+```js
+function fn( a , b ) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve( a + b )
+        },1000)
     })
-    ```
+}	
+```
 
-- Promise.reject()
 
-  - ```js
-    创建一个立即拒绝的Promise
-    等同于
-    new Promise((resolve,reject) => {
-        reject("拒绝")
-    })
-    ```
 
-    
+### 3.1.Promise.resolve()
 
-- Promise.all([])
+- ```js
+  创建一个立即完成的Promise
+  等同于
+  new Promise((resolve,reject) => {
+    resolve("内容")  
+  })
+  ```
 
-  - 添加一个数组
 
-  - 放回的是一个数组，放回多个Promise的执行结果
 
-  - 有一个错误，就会返回错误
+### 3.2.Promise.reject()
 
-    
-
-- Promise.allSettled([])
-
-  - 同时返回多个Promise对象
-  - 返回的是对象数组，错误的数据也会返回
-  - 相当有then中的第二个执行结果reason
+- ```js
+  创建一个立即拒绝的Promise
+  等同于
+  new Promise((resolve,reject) => {
+      reject("拒绝")
+  })
+  ```
 
 - 
 
+
+
+### 3.3.Promise.all([])
+
+- 添加一个数组
+
+- 放回的是一个数组，放回多个Promise的执行结果
+
+- 有一个错误，就会返回错误
+
+- ```js
+  Promise.all([
+  	fn(1,1),
+  	fn(2,2),
+  	fn(3,3),
+  ]).then(result => {
+  	console.log(result);
+  	
+  })
+  ```
+
 - 
 
-  
 
-  
 
-  
+### 3.4.Promise.allSettled([])
 
-  
+- 同时返回多个Promise对象
 
-  
+- 返回的是对象数组，错误的数据也会返回
 
-  
+- 相当有then中的第二个执行结果reason
 
-  
+  - ```js
+    Promise.allSettled([
+    	fn(1,1),
+    	fn(2,2)
+    ]).then(
+        result => console.log(result)
+    );
+    ```
 
-  
+  - 
 
-  
 
-  
 
-  
+### 3.5.Promise.race([])
 
+- 多个Promise同时跑，谁快要谁
+
+- 放回最快的，无论对错
+
+- ```js
+  Promise.any([
+      fn(1,1),
+      fn(2,2),
+      Promise.reject(333)
+  ]).then(result => {
+      console.log(result)
+  }).catch(reason => {
+      console.log(reason)
+  })
+  ```
+
+
+
+
+
+### 3.6.Promise.any([])
+
+- 多个Promise同时跑，谁快要谁
+
+- 返回正确的
+
+- ```js
+  Promise.any([
+      fn(1,1),
+      fn(2,2),
+      Promise.reject(333)
+  ]).then(result => {
+      console.log(result)
+  }).catch(reason => {
+      console.log(reason)
+  })
+  ```
+
+- 
+
+
+
+
+
+## 4.Promise中的执行顺序
+
+### 4.1.执行流程
+
+- 调用栈 
+- 队列
+  - 微任务队列
+    - 像Promise的回调函数，then，catch， finally
+  - 宏任务队列
+    - 大部分代码
+
+
+
+### 4.2.面试题
+
+```js
+
+console.log(1);
+
+setTimeout(() => console.log(2));
+
+Promise.resolve().then(() => console.log(3));
+
+Promise.resolve().then(() => setTimeout(() => {console.log(4)}));
+
+Promise.resolve().then(() => console.log(5));
+
+setTimeout(() => console.log(6));
+
+console.log(7);
+```
+
+
+
+
+
+
+
+## 5.async和await
+
+### 5.1.async
+
+- 通过async可以快速创建异步函数，这个async就相当于一个语法糖
+  - 异步函数的返回值会自动封装到一个Promise中放回
+- 使用它的好处就是可以调用await方法
+- 这种声明的函数中如果没有await，那么它的执行顺序是依次执行的
+
+```js
+//正常async使用
+async function fn() {
+    console.log(1)
+    console.log(2)
+    console.log(3)
+}
+fn()//123
+
+
+
+//使用await方法
+async function fn() {
+    console.log(1)
+    await console.log(2)
+    console.log(3)
+}
+console.log(4)
+fn()//1243
+```
+
+
+
+
+
+### 5.2.await
+
+- 等待异步函数的结果出来才放回结果
+
+- await方法只能用在async声明的函数，或者是es模块的顶级作用域中
+
+- 它不会阻塞异步函数以外的代码
+
+  - 这里指的是异步函数内部的代码
+
+- 通过await调用的代码，需要通过try-catch来处理异常
+
+- ```js
+  function fn( a , b ) {
+      return new Promise(resolve => {
+          setTimeout(() => {
+              resolve(a + b)
+          }, 1000)
+      })
+  }
   
+  //解决毁掉地狱的问题
+  async function foo() {
+      try{
+          let bar = await fn(1,1)
+          bar = await fn(bar, 2)
+          bar = await fn(bar, 3)
+          bar = await fn(bar, 4)
+      }.catch(e){
+          console.log("出错嘞")
+      }
+  }
+  
+  
+  
+  ```
+
+- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ​	

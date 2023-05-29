@@ -27,11 +27,14 @@
                 在该目录下的终端输入命令
 
                 命令
-                    npm init，往下依次执行文件的名字信息等
+                    npm init，初始化项目创建package.json
+                        往下依次执行文件的名字信息等
                     名称
                     版本
                     描述（可有可无）
-                    main  一般index.js\
+                    main  
+                        入口文件
+                            一般index.js
                     author 名字
                 
                     npm init -y
@@ -96,3 +99,4 @@
                     查看当前的npm地址
                         npm config get registry
 */ 
+
