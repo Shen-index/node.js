@@ -1,5 +1,5 @@
 const express = require("express");
-const path = require("node:path");
+const path = require("path");
 const app = express();
 
 const ARR = [
@@ -19,6 +19,9 @@ const ARR = [
     address: "流沙河",
   },
 ];
+
+
+let name = "猪八戒"
 
 // 配置模板引擎
 app.set("view engine", "ejs");
@@ -40,12 +43,12 @@ app.get("/hello", (req, res) => {
 });
 
 // 用户访问students时，可以放回一个表单，并且有数据
-app.get("/students", (req, res, ) => {
+app.get("/students", (req, res) => {
   /*
         默认HTML都是静态页面，它不会根据服务器中数据的变化而变化
             所以这里就需要另一种网页来表示了
             ejs尾缀的文件可以随服务器的改变去改变
-            这个东西被称为模板
+            这个东西被称为模板,它是运行在服务器当中的，服务器端渲染
             node里头有很多的模板，像这种需要html代码的用ejs模板就可以了
                 ejs是node模板中的其中之一(配置的统一流程)
                     - 安装ejs
@@ -87,7 +90,7 @@ app.get("/students", (req, res, ) => {
                             可以直接编写js代码，就是逻辑等
     */
 //   res.render("students", { name: "悟空", age: "18" });
-  res.render("students", { name });
+  res.render("students", { name, age: 23, gender: '男'});
 });
 
 // 路由
