@@ -96,7 +96,7 @@ app.post("/update-students", (req, res) => {
   // console.log(id
   //   );
 
-  const { id, name,age, gender, address } = req.body;
+  const { id, name, age, gender, address }=req.body;
   console.log( id, name, age, gender, address );
   
   const student = ARR.find((item) => item.id == id);

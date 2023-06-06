@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生列表</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid red;
+            font-size: 20px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        caption {
+            font-size: 25px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>当前用户<%= username %></h2>
+    <a href="/li">退出用户</a>
+    <hr>
+    <% if(ARR && ARR.length > 0 ) { %> 
+    <table>
+        <thead>
+            <caption>妖怪</caption>
+            <tr>
+                <th>序列</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <th>地址</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+             <%  for(const foo of ARR) { %>
+                <tr>
+                    <th>
+                        <%= foo.id %>
+                    </th>
+                    <th>
+                        <%= foo.name %>
+                    </th>
+                    <th>
+                        <%= foo.age %>
+                    </th>
+                    <th>
+                        <%= foo.gender %>
+                    </th>
+                    <th>
+                        <%= foo.address %>
+                    </th>
+                    <th>
+                        <a 
+                        onclick="return confirm('确认删除?')"
+                        href="/students/delete?id=<%= foo.id %>">删除</a>
+                        
+                        <a href="/students/toupdate?id=<%= foo.id %>">修改</a>
+                    </th>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
+
+    <% } else {%>
+        <p>学生没有数据啦</p>
+    <% } %>
+    <form action="/students/add" method="post">
+        <div>姓名<input type="text" name="name"></div>
+        <div>年龄<input type="number" name="age" max="80" min="0"></div>
+        <div>
+            性别<input type="radio" name="gender" value="男">男
+            <input type="radio" name="gender" value="女">女
+        </div>
+        <div>地址<input type="text" name="address"></div>
+        <div>
+            <button>添加</button>
+
+        </div>
+    </form>
+</body>
+
+</html>
